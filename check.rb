@@ -14,9 +14,9 @@ Dir.glob('output/*.rb') do |package|
     puts "Update found for #{pkg_name}: #{crew_ver} => #{latest_ver}".lightcyan
 
     Dir.chdir 'chromebrew' do
-      system "git checkout update_#{pkg_name}_#{Time.now.strftime("%Y%m%d")}"
+      system "git checkout -b update_#{pkg_name}_#{Time.now.strftime("%Y%m%d")}"
 
-      FileUtils.cp package, "chromebrew/packages/#{pkg_name}.rb"
+      FileUtils.cp File.join('..', package), "chromebrew/packages/#{pkg_name}.rb"
 
       system "git add chromebrew/packages/#{pkg_name}.rb"
       system "git commit -m 'Auto-generated update for package #{pkg_name}: #{crew_ver} => #{latest_ver}'"
