@@ -7,7 +7,7 @@ class Balena_etcher < Package
   license 'Apache-2.0'
   compatibility 'x86_64'
 
-  source_url 'https://github.com/balena-io/etcher/releases/download/v2.1.4/balena-etcher_2.1.4_amd64.deb'
+  source_url "https://github.com/balena-io/etcher/releases/download/v#{version}/balena-etcher_#{version}_amd64.deb"
   source_sha256 'c635213bb0724eb789bc036819cd1adb7d0693fd3bd26622811a8f7bd25e9252'
 
   no_compile_needed
@@ -33,7 +33,11 @@ class Balena_etcher < Package
   depends_on 'sommelier'
 
   def self.install
-    FileUtils.mkdir_p CREW_DEST_PREFIX
-    FileUtils.mv Dir['usr/*'], CREW_DEST_PREFIX
+    FileUtils.mkdir_p "#{CREW_DEST_PREFIX}/bin"
+
+    FileUtils.mv 'usr/share', CREW_DEST_PREFIX
+    FileUtils.mv 'opt/', CREW_DEST_PREFIX
+
+    FileUtils.ln_s '../opt/balena-etcher', "#{CREW_DEST_PREFIX}/bin/balena-etcher"
   end
 end

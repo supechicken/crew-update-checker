@@ -6,11 +6,12 @@ class Vivaldi < Package
   version '7.5.3735.62-1'
   license 'Vivaldi'
   compatibility 'aarch64 armv7l x86_64'
+  min_glibc '2.37'
 
   source_url({
-    aarch64: 'https://repo.vivaldi.com/stable/deb/pool/main/vivaldi-stable_7.5.3735.62-1_armhf.deb',
-    armv7l: 'https://repo.vivaldi.com/stable/deb/pool/main/vivaldi-stable_7.5.3735.62-1_armhf.deb',
-    x86_64: 'https://repo.vivaldi.com/stable/deb/pool/main/vivaldi-stable_7.5.3735.62-1_amd64.deb'
+    aarch64: "https://repo.vivaldi.com/stable/deb/pool/main/vivaldi-stable_#{version}_armhf.deb",
+    armv7l: "https://repo.vivaldi.com/stable/deb/pool/main/vivaldi-stable_#{version}_armhf.deb",
+    x86_64: "https://repo.vivaldi.com/stable/deb/pool/main/vivaldi-stable_#{version}_amd64.deb"
   })
 
   source_sha256({

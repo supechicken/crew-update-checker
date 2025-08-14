@@ -31,13 +31,15 @@ Dir.glob('packages/*/') do |pkg_path|
       version '#{latest_source[:version].tr('\'', '\\\'')}'
       license '#{pkg_info[:license].tr('\'', '\\\'')}'
       compatibility '#{pkg_info[:compatibility].tr('\'', '\\\'')}'
-
   EOF
+
+  pkg_script += "  min_glibc '#{pkg_info[:min_glibc]}'\n" if pkg_info[:min_glibc]
 
   if pkg_info[:flags].include?('no_compile_needed') && pkg_info[:compatibility].split(' ').length > 1
     pkg_script += <<~EOF
+      #{}
         source_url({
-          #{latest_source[:source_url].map(&-> (k, v) { "#{k}: '#{v.tr('\'', '\\\'')}'" }).join(",\n    ")}
+          #{latest_source[:source_url].map(&-> (k, v) { "#{k}: \"#{v.tr('"', '\\"').gsub(latest_source[:version], '#{version}')}\"" }).join(",\n    ")}
         })
 
         source_sha256({
@@ -47,7 +49,8 @@ Dir.glob('packages/*/') do |pkg_path|
     EOF
   else
     pkg_script += <<~EOF
-        source_url '#{latest_source[:source_url].values.first}'
+      #{}
+        source_url "#{latest_source[:source_url].values.first.tr('"', '\\"').gsub(latest_source[:version], '#{version}')}"
         source_sha256 '#{latest_source[:source_sha256].values.first}'
       #{}
     EOF
