@@ -14,15 +14,16 @@ Dir.glob('output/*.rb') do |package|
     puts "Update found for #{pkg_name}: #{crew_ver} => #{latest_ver}".lightcyan
 
     Dir.chdir 'chromebrew' do
-      system "git checkout -b update_#{pkg_name}_#{Time.now.strftime("%Y%m%d")}"
+      system 'git', 'checkout', '-b', "update_#{pkg_name}_#{Time.now.strftime("%Y%m%d")}"
+      system 'git', 'push', '--set-upstream', 'origin', "update_#{pkg_name}_#{Time.now.strftime("%Y%m%d")}"
 
       FileUtils.cp File.join('..', package), "packages/#{pkg_name}.rb"
 
-      system "git add packages/#{pkg_name}.rb"
-      system "git commit -m 'Auto-generated update for package #{pkg_name}: #{crew_ver} => #{latest_ver}'"
-      system "git push"
+      system 'git', 'add', "packages/#{pkg_name}.rb"
+      system 'git', 'commit', '-m', "Auto-generated update for package #{pkg_name}: #{crew_ver} => #{latest_ver}"
+      system 'git', 'push'
 
-      system "git checkout master"
+      system 'git', 'checkout', 'master'
     end
   end
 end
