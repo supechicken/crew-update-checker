@@ -30,4 +30,6 @@ jobs:
         run: ruby generate.rb
 
       - name: Check if packages is latest
+        env:
+          GH_TOKEN: ${{ secrets.CREW_TOKEN }}
         run: ruby check.rb
