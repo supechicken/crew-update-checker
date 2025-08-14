@@ -22,7 +22,7 @@ Dir.glob('packages/*/') do |pkg_path|
 
   latest_package_list.merge!({ pkg_info[:name] => latest_source[:version] })
 
-  File.write "output/#{pkg_info[:name]}.rb", <<~EOF.gsub(/^[[:blank:]]+$/, '')
+  pkg_script = <<~EOF.gsub(/^[[:blank:]]+$/, '')
     require 'package'
 
     class #{pkg_info[:name].capitalize} < Package
@@ -32,14 +32,28 @@ Dir.glob('packages/*/') do |pkg_path|
       license '#{pkg_info[:license].tr('\'', '\\\'')}'
       compatibility '#{pkg_info[:compatibility].tr('\'', '\\\'')}'
 
-      source_url({
-        #{latest_source[:source_url].map(&-> (k, v) { "#{k}: '#{v.tr('\'', '\\\'')}'" }).join("\n    ")}
-      })
+  EOF
 
-      source_sha256({
-        #{latest_source[:source_sha256].map(&-> (k, v) { "#{k}: '#{v.tr('\'', '\\\'')}'" }).join("\n    ")}
-      })
+  if pkg_info[:flags].include?('no_compile_needed') && pkg_info[:compatibility].split(' ').length > 1
+    pkg_script += <<~EOF
+        source_url({
+          #{latest_source[:source_url].map(&-> (k, v) { "#{k}: '#{v.tr('\'', '\\\'')}'" }).join(",\n    ")}
+        })
 
+        source_sha256({
+          #{latest_source[:source_sha256].map(&-> (k, v) { "#{k}: '#{v.tr('\'', '\\\'')}'" }).join(",\n    ")}
+        })
+      #{}
+    EOF
+  else
+    pkg_script += <<~EOF
+        source_url '#{latest_source[:source_url].values.first}'
+        source_sha256 '#{latest_source[:source_sha256].values.first}'
+      #{}
+    EOF
+  end
+
+  pkg_script += <<~EOF
       #{pkg_info[:flags].join("\n  ")}
 
       #{pkg_info[:dependencies].map(&-> (pkg) { "depends_on '#{pkg}'" }).join("\n  ")}
@@ -47,6 +61,8 @@ Dir.glob('packages/*/') do |pkg_path|
       #{File.readlines("#{pkg_path}/install.rb", chomp: true, encoding: Encoding::UTF_8)[..-1].join("\n  ")}
     end
   EOF
+
+  File.write "output/#{pkg_info[:name]}.rb", pkg_script.gsub(/^\s+$/, '')
 end
 
 File.write 'output/latest.json', JSON.pretty_generate(latest_package_list)
