@@ -1,0 +1,33 @@
+---
+name: Updater
+on: workflow_dispatch
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/checkout@v4
+        with:
+          repository: supechicken/chromebrew
+          path: chromebrew
+          token: ${{ secrets.CREW_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup environment
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          sudo apt install ruby
+
+      - name: Generate updated packages
+        run: ruby generate.rb
+
+      - name: Check if packages is latest
+        run: ruby check.rb

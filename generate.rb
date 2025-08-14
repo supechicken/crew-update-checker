@@ -1,7 +1,9 @@
 require 'json'
 require_relative 'lib/color'
-require_relative 'lib/deb_repository.rb'
+require_relative 'lib/deb_repository'
+require_relative 'lib/github_releases'
 
+latest_package_list = {}
 
 Dir.glob('packages/*/') do |pkg_path|
   pkg_info = JSON.load_file("#{pkg_path}/info.json", symbolize_names: true)
@@ -14,7 +16,11 @@ Dir.glob('packages/*/') do |pkg_path|
       pkg_info[:source][:name], pkg_info[:source][:repo],
       pkg_info[:source][:component], pkg_info[:compatibility].split(' ')
     )
+  when 'github_releases'
+    latest_source = GitHubReleases.get_latest_binary(pkg_info[:source][:repo], pkg_info[:source][:filename_glob])
   end
+
+  latest_package_list.merge!({ pkg_info[:name] => latest_source[:version] })
 
   File.write "output/#{pkg_info[:name]}.rb", <<~EOF.gsub(/^[[:blank:]]+$/, '')
     require 'package'
@@ -42,3 +48,5 @@ Dir.glob('packages/*/') do |pkg_path|
     end
   EOF
 end
+
+File.write 'output/latest.json', JSON.pretty_generate(latest_package_list)

@@ -7,9 +7,10 @@
   "dependencies": ["libgconf", "alsa_lib", "atk", "cairo", "cups", "dbus", "expat", "fontconfig", "freetype", "gcc", "gdk_pixbuf", "glib", "gtk2", "xzutils", "libnotify", "npsr", "nss", "pango", "sommelier"],
   "flags": ["no_compile_needed", "no_shrink"],
   "source": {
-    "type": "deb_repository",
-    "name": "balena-etcher-electron",
-    "repo": "https://dl.cloudsmith.io/public/balena/etcher/deb/debian",
-    "component": "sid/main"
+    "type": "github_releases",
+    "repo": "balena-io/etcher",
+    "filename_glob": {
+      "x86_64": "balena-etcher_*_amd64.deb"
+    }
   }
 }

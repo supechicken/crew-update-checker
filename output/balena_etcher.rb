@@ -3,18 +3,16 @@ require 'package'
 class Balena_etcher < Package
   description 'Flash OS images to SD cards & USB drives, safely and easily.'
   homepage 'https://www.balena.io/etcher/'
-  version '1.7.9'
+  version '2.1.4'
   license 'Apache-2.0'
   compatibility 'i686 x86_64'
 
   source_url({
-    i686: 'https://dl.cloudsmith.io/public/balena/etcher/deb/debian/pool/any-version/main/b/ba/balena-etcher-electron_1.7.9/balena-etcher-electron_1.7.9_i386.deb'
-    x86_64: 'https://dl.cloudsmith.io/public/balena/etcher/deb/debian/pool/any-version/main/b/ba/balena-etcher-electron_1.7.9/balena-etcher-electron_1.7.9_amd64.deb'
+    x86_64: 'https://github.com/balena-io/etcher/releases/download/v2.1.4/balena-etcher_2.1.4_amd64.deb'
   })
 
   source_sha256({
-    i686: '458d138184d10783129af739452d3bfe01a37b37a96810e84407ce24412494ca'
-    x86_64: '941a03678408b67f7b2b6d3dad48a3e1070eadb53af561c292d7da93b26a91e5'
+    x86_64: 'c635213bb0724eb789bc036819cd1adb7d0693fd3bd26622811a8f7bd25e9252'
   })
 
   no_compile_needed
