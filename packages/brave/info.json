@@ -1,0 +1,15 @@
+{
+  "name": "brave",
+  "description": "Next generation Brave browser for macOS, Windows, Linux, Android.",
+  "homepage": "https://brave.com/",
+  "license": "MPL-2",
+  "compatibility": "x86_64",
+  "dependencies": ["gtk3", "libcom_err", "xdg_base", "sommelier"],
+  "flags": ["no_compile_needed", "no_shrink"],
+  "source": {
+    "type": "deb_repository",
+    "name": "brave-browser",
+    "repo": "https://brave-browser-apt-release.s3.brave.com",
+    "component": "stable/main"
+  }
+}

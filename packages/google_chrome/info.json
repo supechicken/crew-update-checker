@@ -1,0 +1,15 @@
+{
+  "name": "google_chrome",
+  "description": "Google Chrome is a fast, easy to use, and secure web browser.",
+  "homepage": "https://www.google.com/chrome/",
+  "license": "google-chrome",
+  "compatibility": "x86_64",
+  "dependencies": ["nss", "cairo", "gtk3", "expat", "cras"],
+  "flags": ["no_compile_needed", "no_shrink"],
+  "source": {
+    "type": "deb_repository",
+    "name": "google-chrome-stable",
+    "repo": "https://dl.google.com/linux/chrome/deb",
+    "component": "stable/main"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "edge",
+  "description": "Microsoft Edge is the fast and secure browser",
+  "homepage": "https://www.microsoft.com/en-us/edge",
+  "license": "MIT",
+  "compatibility": "x86_64",
+  "dependencies": ["at_spi2_core", "libcom_err", "libxcomposite", "libxdamage", "sommelier"],
+  "flags": ["no_compile_needed", "no_shrink"],
+  "source": {
+    "type": "deb_repository",
+    "name": "microsoft-edge-stable",
+    "repo": "https://packages.microsoft.com/repos/edge",
+    "component": "stable/main"
+  }
+}

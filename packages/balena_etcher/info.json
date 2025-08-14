@@ -1,0 +1,15 @@
+{
+  "name": "balena_etcher",
+  "description": "Flash OS images to SD cards & USB drives, safely and easily.",
+  "homepage": "https://www.balena.io/etcher/",
+  "license": "Apache-2.0",
+  "compatibility": "i686 x86_64",
+  "dependencies": ["libgconf", "alsa_lib", "atk", "cairo", "cups", "dbus", "expat", "fontconfig", "freetype", "gcc", "gdk_pixbuf", "glib", "gtk2", "xzutils", "libnotify", "npsr", "nss", "pango", "sommelier"],
+  "flags": ["no_compile_needed", "no_shrink"],
+  "source": {
+    "type": "deb_repository",
+    "name": "balena-etcher-electron",
+    "repo": "https://dl.cloudsmith.io/public/balena/etcher/deb/debian",
+    "component": "sid/main"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "signal_desktop",
+  "description": "Private Messenger for Windows, Mac, and Linux",
+  "homepage": "https://signal.org/",
+  "license": "AGPL-3.0",
+  "compatibility": "x86_64",
+  "dependencies": ["at_spi2_core", "gtk3", "sommelier"],
+  "flags": ["no_compile_needed", "no_shrink"],
+  "source": {
+    "type": "deb_repository",
+    "name": "signal-desktop",
+    "repo": "https://updates.signal.org/desktop/apt",
+    "component": "xenial/main"
+  }
+}
