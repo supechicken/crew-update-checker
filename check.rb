@@ -12,7 +12,7 @@ Dir.glob('output/*.rb') do |package|
   if crew_ver != LATEST_PACKAGE_LIST[pkg_name]
     puts "Update found for #{pkg_name}: #{crew_ver} => #{latest_ver}".lightcyan
 
-    File.wrire '/tmp/pr.txt', <<~EOF
+    File.write '/tmp/pr.txt', <<~EOF
       ### Package information
       - Package name: #{pkg_name}
       - Old version: #{crew_ver}
