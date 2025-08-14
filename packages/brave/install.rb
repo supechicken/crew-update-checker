@@ -1,5 +1,5 @@
 def self.install
-  FileUtils.mkdir_p %W[#{CREW_DEST_PREFIX}/bin #{CREW_DEST_PREFIX}/share/brave]
+  FileUtils.mkdir_p %W[#{CREW_DEST_PREFIX}/bin #{CREW_DEST_PREFIX}/share]
   FileUtils.mv Dir['usr/share/*', 'opt/brave.com/brave'], "#{CREW_DEST_PREFIX}/share"
 
   FileUtils.ln_s '../share/brave/brave-browser-stable', "#{CREW_DEST_PREFIX}/bin/brave-browser"
